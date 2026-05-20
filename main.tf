@@ -72,7 +72,7 @@ resource "aws_kay_pair" "aura-anime_key" {
     public_key = file("f:/file/devops/aura-anime-1/aura-anime-key.pub")
 }
 
-resource "aws_instance" "aura-anime-server" {
+resource "aws_instance" "aura-anime_server" {
     ami                    = "ami-05d2d839d4f73aafb"
     instance_type          = "m7i-flex.large"
     vpc_security_group_ids = [aws_security_group.aura-anime_sg.id]
