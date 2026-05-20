@@ -80,8 +80,8 @@ resource "aws_instance" "aura-anime_server" {
     key_name               = aws_key_pair.aura-anime_key.key_name
 
     root_block_device {
-        root_size = 16
-        root_type = "gp3"
+        volume_size = 16
+        volume_type = "gp3"
     }
 
     tags = { Name = "aura-anime-server" }
