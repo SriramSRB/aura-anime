@@ -67,7 +67,7 @@ resource "aws_security_group" "aura-anime_sg" {
     }
 }
 
-resource "aws_kay_pair" "aura-anime_key" {
+resource "aws_key_pair" "aura-anime_key" {
     key_name   = "aura-anime-key"
     public_key = file("f:/file/devops/aura-anime-1/aura-anime-key.pub")
 }
@@ -77,7 +77,7 @@ resource "aws_instance" "aura-anime_server" {
     instance_type          = "m7i-flex.large"
     vpc_security_group_ids = [aws_security_group.aura-anime_sg.id]
     subnet_id              = aws_subnet.aura-anime_subnet.id
-    key_name               = aws_kay_pair.aura-anime_key.key_name
+    key_name               = aws_key_pair.aura-anime_key.key_name
 
     root_block_device {
         root_size = 16
