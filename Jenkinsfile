@@ -22,7 +22,7 @@ pipeline {
         }
         stage ('4. Deploy to kubernetes') {
             steps {
-                sh 'kubectl apply -f delpyment.yml'
+                sh 'kubectl apply -f deployment.yml'
                 sh 'kubectl rollout restart deployment aura-anime-deployment'
             }
         }
