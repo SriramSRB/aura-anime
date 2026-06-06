@@ -75,7 +75,7 @@ resource "aws_key_pair" "aura-anime_key" {
 resource "aws_instance" "aura-anime_server" {
     ami                    = "ami-05d2d839d4f73aafb"
     instance_type          = "m7i-flex.large"
-    vpc_security_group_ids = [aws_security_group" "aura-anime_sg.id]
+    vpc_security_group_ids = [aws_security_group.aura-anime_sg.id]
     subnet_id              = aws_subnet.aura-anime_subnet.id
     key_name               = aws_key_pair.aura-anime_key.key_name
 
