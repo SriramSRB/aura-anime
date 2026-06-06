@@ -1,0 +1,52 @@
+appVersion: app/v1
+kind: Deployment
+metadata:
+  name: aura-anime-deployment
+  labels:
+    project: aura-anime
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      project: aura-anime
+  template:
+    metadata:
+      labels:
+        project: aura-anime
+    spec:
+      containers:
+        - name: aura-anime-container
+          image: sriramsrb/aura-anime:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+
+---
+
+appVersion: v1
+kind: Service
+metadata:
+  name: aura-anime-service
+  labels:
+    project: aura-anime
+spec:
+  type: NodePort
+  selector:
+    project: aura-anime
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 30080
