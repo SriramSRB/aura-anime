@@ -8,7 +8,7 @@ resource "aws_vpc" "aura-anime_vpc" {
 }
 
 resource "aws_subnet" "aura-anime_subnet" {
-    vpc                     = aws_vpc.aura-anime_vpc.id
+    vpc_id                  = aws_vpc.aura-anime_vpc.id
     cidr_block              = "10.0.0.0/21"
     map_public_ip_on_launch = ture
     availability_zone       = "ap-south-1a"
@@ -16,24 +16,24 @@ resource "aws_subnet" "aura-anime_subnet" {
 }
 
 resource "aws_internet_gateway" "aura-anime-igw" {
-    vpc = aws_vpc.aura-anime_vpc.id
+    vpc_id = aws_vpc.aura-anime_vpc.id
 }
 
 resource "aws_route_table" "aura-anime_rt" {
-    vpc = aws_vpc.aura-anime_vpc.id
-    route{
+    vpc_id = aws_vpc.aura-anime_vpc.id
+    route {
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.aura-anime-igw.id
     }
 }
 
 resource "aws_route_table_association" "aura-anime_association" {
-    subnet_id     = aws_subnet.aura-anime_subnet.id
+    subnet_id      = aws_subnet.aura-anime_subnet.id
     route_table_id = aws_route_table.aura-anime_rt.id
 }
 
 resource "aws_security_group" "aura-anime_sg" {
-    vpc = aws_vpc.aura-anime_vpc.id
+    vpc_id = aws_vpc.aura-anime_vpc.id
 
     ingress {
         from_port   = 22
