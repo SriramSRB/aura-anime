@@ -10,7 +10,7 @@ resource "aws_vpc" "aura-anime_vpc" {
 resource "aws_subnet" "aura-anime_subnet" {
     vpc_id                  = aws_vpc.aura-anime_vpc.id
     cidr_block              = "10.0.0.0/21"
-    map_public_ip_on_launch = ture
+    map_public_ip_on_launch = true
     availability_zone       = "ap-south-1a"
     tags                    = { Name = "aura-anime-subnet" }
 }
