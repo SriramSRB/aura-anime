@@ -69,7 +69,7 @@ resource "aws_security_group" "aura-anime_sg" {
 
 resource "aws_key_pair" "aura-anime_key" {
     key_name   = "aura-anime-key"
-    public_key = file("f:/file/devops/aura-anime/aura-anime-key")
+    public_key = file("f:/file/devops/aura-anime/aura-anime-key.pub")
 }
 
 resource "aws_instance" "aura-anime_server" {
