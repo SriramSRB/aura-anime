@@ -85,7 +85,7 @@ resource "aws_instance" "aura-anime-server" {
     }
 
     user_data = <<-EOF
-    !/bin/bash
+    #!/bin/bash
     sudo apt update -y
     sudo apt install openjdk-21-jre -y
     sudo apt install docker.io -y
