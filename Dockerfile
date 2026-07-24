@@ -1,6 +1,6 @@
 FROM node:20
-WORKDIR /aura-anime.
-COPY package.json
+WORKDIR /aura-anime
+COPY package.json .
 RUN npm install
 COPY . . 
 EXPOSE 3000
