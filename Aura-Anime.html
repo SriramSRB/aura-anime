@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="AURA — Stream 50,000+ anime episodes in 4K. Sub & Dub. No ads. 8 languages. Start free today.">
+<meta name="theme-color" content="#080808">
+<meta property="og:title" content="AURA — Watch Anime Free">
+<meta property="og:description" content="Stream 50,000+ anime episodes in 4K Ultra HD. Sub & Dub in 8 languages.">
+<meta property="og:type" content="website">
+<title>AURA — Watch Anime Free</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap"></noscript>
+<style>
+:root{--k:#080808;--d:#0d0d0d;--c:#111;--b:#4fc3f7;--bd:rgba(79,195,247,.15);--bg:rgba(79,195,247,.4);--u:#39ff14;--ug:rgba(57,255,20,.35);--w:#f0f0f0;--m:#666;--br:rgba(79,195,247,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--k);color:var(--w);font-family:'Rajdhani',sans-serif;overflow-x:hidden;cursor:none}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* Cursor */
+#cur,#cring{position:fixed;top:0;left:0;pointer-events:none;border-radius:50%;z-index:9999;will-change:transform}
+#cur{width:10px;height:10px;background:var(--b);mix-blend-mode:screen;transition:background .2s}
+#cring{width:34px;height:34px;border:1px solid var(--b);opacity:.55;transition:border-color .2s}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:70px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(8,8,8,.96),transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--br);transition:background .3s}
+.logo{font-family:'Orbitron',monospace;font-size:1.9rem;font-weight:900;letter-spacing:.2em}
+.logo span{color:var(--b)}
+.logo::after{content:'';display:block;height:1px;background:linear-gradient(90deg,var(--b),transparent);margin-top:-3px}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{color:#aaa;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--b);transition:width .25s}
+.nav-links a:hover{color:var(--b)}
+.nav-links a:hover::after{width:100%}
+.nav-r{display:flex;align-items:center;gap:.8rem}
+select.lang{background:transparent;border:1px solid var(--br);color:#aaa;padding:.35rem .7rem;font-family:'Rajdhani',sans-serif;font-size:.82rem;letter-spacing:.05em;border-radius:3px;cursor:pointer;appearance:none}
+select.lang:focus{outline:none;border-color:var(--b)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid;padding:.55rem 1.3rem;font-family:'Orbitron',monospace;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .28s;background:transparent}
+.btn-b{border-color:var(--b);color:var(--b)}
+.btn-b:hover{background:var(--b);color:var(--k);box-shadow:0 0 24px var(--bg)}
+.btn-u{border-color:var(--u);color:var(--u)}
+.btn-u:hover{background:var(--u);color:var(--k);box-shadow:0 0 24px var(--ug)}
+.btn-play{background:var(--b);color:var(--k);border-color:var(--b);padding:.8rem 1.8rem;font-size:.82rem}
+.btn-play:hover{background:#fff;box-shadow:0 0 40px var(--bg);transform:scale(1.03)}
+
+/* Hero */
+.hero{position:relative;height:100vh;min-height:650px;display:flex;align-items:flex-end;padding:0 5% 7%}
+.hero-bg{position:absolute;inset:0;background:url('https://wallpapercave.com/wp/wp12437569.jpg') center top/cover;filter:brightness(.42);transform:scale(1.06);animation:zoom 20s ease-in-out infinite alternate;will-change:transform}
+@keyframes zoom{from{transform:scale(1.06)}to{transform:scale(1.13)}}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,8,1) 0%,rgba(8,8,8,.65) 28%,transparent 58%),linear-gradient(90deg,rgba(8,8,8,.8) 0%,transparent 52%)}
+.hero-c{position:relative;z-index:2;max-width:660px}
+.badge{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--u);padding:.25rem .75rem;margin-bottom:1.4rem;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--u)}
+.badge::before{content:'';width:6px;height:6px;background:var(--u);border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.5)}}
+.hero-title{font-family:'Orbitron',monospace;font-size:clamp(2.4rem,5.5vw,5.2rem);font-weight:900;line-height:1.06;margin-bottom:1.1rem;text-shadow:0 0 60px rgba(79,195,247,.18)}
+.hero-title .a{color:var(--b)}
+.hero-meta{display:flex;align-items:center;gap:.85rem;margin-bottom:1.1rem;font-size:.82rem;font-weight:600;flex-wrap:wrap}
+.hero-meta .r{color:var(--u)}
+.hero-meta .dot{color:var(--m)}
+.tag{border:1px solid var(--br);padding:.12rem .45rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--b)}
+.hero-desc{font-size:.95rem;line-height:1.7;color:#bbb;margin-bottom:1.8rem;max-width:510px;font-weight:400}
+.hero-acts{display:flex;gap:.9rem;flex-wrap:wrap;align-items:center}
+.scroll-hint{position:absolute;bottom:1.8rem;right:5%;display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--m);writing-mode:vertical-rl}
+.scroll-hint::after{content:'';width:1px;height:56px;background:linear-gradient(to bottom,var(--b),transparent);animation:sl 2s ease-in-out infinite}
+@keyframes sl{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1}100%{opacity:0;transform:scaleY(1);transform-origin:bottom}}
+
+/* Section */
+section{padding:4.5rem 5%}
+.sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2.2rem}
+.sec-t{font-family:'Orbitron',monospace;font-size:1.25rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding-left:1rem;position:relative}
+.sec-t::before{content:'';position:absolute;left:0;top:10%;bottom:10%;width:3px;background:var(--b);box-shadow:0 0 10px var(--b)}
+.sec-t.g::before{background:var(--u);box-shadow:0 0 10px var(--u)}
+.view-all{color:var(--b);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;transition:color .2s}
+.view-all:hover{color:var(--w)}
+
+/* Marquee */
+.marq{padding:1.3rem 0;border-top:1px solid var(--br);border-bottom:1px solid var(--br);overflow:hidden}
+.marq-t{display:flex;gap:2.5rem;animation:marq 22s linear infinite;white-space:nowrap;will-change:transform}
+.marq-i{display:flex;align-items:center;gap:.7rem;font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--m)}
+.marq-i .d{color:var(--b);font-size:1rem}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Search */
+.srch-sec{padding:2.5rem 5%;background:var(--c);border-top:1px solid var(--br);border-bottom:1px solid var(--br)}
+.srch-w{max-width:680px;margin:0 auto;position:relative}
+.srch-i{width:100%;background:var(--k);border:1px solid var(--br);color:var(--w);padding:.95rem 3rem .95rem 1.4rem;font-family:'Rajdhani',sans-serif;font-size:.95rem;letter-spacing:.04em;outline:none;transition:border-color .25s;border-radius:2px}
+.srch-i::placeholder{color:var(--m)}
+.srch-i:focus{border-color:var(--b)}
+.srch-ic{position:absolute;right:1rem;top:50%;transform:translateY(-50%);color:var(--b);font-size:1.1rem;pointer-events:none}
+.srch-tags{display:flex;gap:.5rem;margin-top:.9rem;flex-wrap:wrap;justify-content:center}
+.stag{border:1px solid var(--br);padding:.2rem .75rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;color:var(--m);background:none}
+.stag:hover{border-color:var(--b);color:var(--b)}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1.1rem}
+.card{position:relative;border-radius:2px;overflow:hidden;cursor:pointer;transition:transform .28s,box-shadow .28s;contain:layout style}
+.card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 55px rgba(0,0,0,.8),0 0 28px var(--bd)}
+.card img{width:100%;aspect-ratio:2/3;object-fit:cover;filter:brightness(.85);transition:filter .3s}
+.card:hover img{filter:brightness(.45)}
+.card:hover .cov{opacity:1}
+.card:hover .cinfo{transform:translateY(0)}
+.cov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,8,.96) 0%,rgba(8,8,8,.25) 60%,transparent 100%);opacity:0;transition:opacity .28s;display:flex;flex-direction:column;justify-content:flex-end;padding:.9rem}
+.cinfo{transform:translateY(8px);transition:transform .28s}
+.ctitle{font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;margin-bottom:.35rem;line-height:1.3}
+.cmeta{display:flex;gap:.4rem;flex-wrap:wrap;font-size:.66rem;font-weight:600;color:#777;margin-bottom:.5rem}
+.cmeta .ep{color:var(--u)}
+.cplay{display:inline-flex;align-items:center;gap:.35rem;background:var(--b);color:var(--k);border:none;padding:.3rem .75rem;font-family:'Rajdhani',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.cplay:hover{background:var(--w)}
+.cbadge{position:absolute;top:.55rem;right:.55rem;padding:.18rem .45rem;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.new{background:var(--u);color:var(--k)}
+.hot{background:#f44;color:#fff}
+.dub{background:var(--b);color:var(--k)}
+
+/* H-scroll row */
+.hscroll{overflow-x:auto;padding-bottom:.4rem;-webkit-overflow-scrolling:touch}
+.hscroll::-webkit-scrollbar{height:2px}
+.hscroll::-webkit-scrollbar-thumb{background:var(--b)}
+.row{display:flex;gap:1rem}
+.row .card{flex:0 0 195px}
+
+/* 2-col layout */
+.two{display:grid;grid-template-columns:1fr 370px;gap:1.8rem}
+
+/* Featured */
+.feat-strip{display:grid;grid-template-columns:1.75fr 1fr 1fr;gap:1.1rem}
+.feat-main{position:relative;border-radius:2px;overflow:hidden;cursor:pointer;grid-row:span 2}
+.feat-main img{width:100%;height:100%;object-fit:cover;filter:brightness(.65);transition:filter .35s,transform .35s}
+.feat-main:hover img{filter:brightness(.4);transform:scale(1.03)}
+.feat-ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,8,1) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem}
+.feat-sm{position:relative;border-radius:2px;overflow:hidden;cursor:pointer}
+.feat-sm img{width:100%;height:155px;object-fit:cover;filter:brightness(.65);transition:all .3s}
+.feat-sm:hover img{filter:brightness(.38);transform:scale(1.03)}
+.feat-sm-ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,8,.9) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:.9rem}
+
+/* Top list */
+.top-list{display:flex;flex-direction:column}
+.top-i{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;border-bottom:1px solid var(--br);cursor:pointer;transition:padding-left .2s}
+.top-i:hover{padding-left:6px}
+.top-rank{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--bd);width:2.2rem;flex-shrink:0}
+.top-i:nth-child(-n+3) .top-rank{color:var(--b)}
+.top-th{width:46px;height:63px;object-fit:cover;border-radius:1px;flex-shrink:0}
+.top-info{flex:1;min-width:0}
+.top-n{font-weight:700;font-size:.88rem;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-m{font-size:.72rem;color:var(--m)}
+.top-sc{font-family:'Orbitron',monospace;font-size:.82rem;color:var(--u);font-weight:700}
+
+/* Spotlight */
+.spot{position:relative;height:58vh;min-height:460px;overflow:hidden;display:flex;align-items:flex-end;padding:0 5% 3.5rem}
+.spot-bg{position:absolute;inset:0;background:url('https://wallpapercave.com/wp/wp7056655.jpg') center/cover;filter:brightness(.28) saturate(.65)}
+.spot-grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,8,1) 0%,rgba(8,8,8,.5) 40%,transparent 68%)}
+.spot-c{position:relative;z-index:2;max-width:580px}
+
+/* Schedule */
+.sched{display:grid;grid-template-columns:repeat(7,1fr);gap:.75rem}
+.sday{background:var(--c);border:1px solid var(--br);padding:.9rem .7rem;border-radius:2px}
+.sday.today{border-color:var(--b);box-shadow:0 0 18px var(--bd)}
+.dlbl{font-family:'Orbitron',monospace;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--m);margin-bottom:.7rem}
+.sday.today .dlbl{color:var(--b)}
+.sitem{display:flex;align-items:center;gap:.45rem;padding:.35rem 0;border-bottom:1px solid var(--br);cursor:pointer;transition:padding-left .18s}
+.sitem:hover{padding-left:3px}
+.sitem:last-child{border-bottom:none}
+.sth{width:30px;height:42px;object-fit:cover;border-radius:1px;flex-shrink:0}
+.sinf{flex:1;min-width:0}
+.sn{font-size:.67rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.sep{font-size:.58rem;color:var(--u);font-weight:700;margin-top:.15rem}
+
+/* Genres */
+.genres{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:.75rem}
+.genre{position:relative;height:85px;border:1px solid var(--br);background:var(--c);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:border-color .25s,transform .2s,box-shadow .25s;border-radius:2px;overflow:hidden;text-align:center}
+.genre:hover{border-color:var(--b);transform:scale(1.03);box-shadow:0 0 18px var(--bd)}
+.genre:hover .gname{color:var(--b)}
+.gbg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.14;transition:opacity .25s}
+.genre:hover .gbg{opacity:.24}
+.gname{position:relative;font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:color .25s}
+.gcnt{position:relative;font-size:.62rem;color:var(--m);margin-top:.2rem;letter-spacing:.04em}
+
+/* Stats */
+.stats{background:var(--c);border-top:1px solid var(--br);border-bottom:1px solid var(--br);padding:3.5rem 5%}
+.stats-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;text-align:center}
+.sv{font-family:'Orbitron',monospace;font-size:clamp(2rem,4vw,3.4rem);font-weight:900;color:var(--b);text-shadow:0 0 28px var(--bg);line-height:1;margin-bottom:.4rem}
+.sl{font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m)}
+
+/* Languages */
+.langs{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.9rem}
+.lang-c{background:var(--c);border:1px solid var(--br);padding:1.1rem;border-radius:2px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:.9rem}
+.lang-c:hover{border-color:var(--b);background:var(--bd)}
+.lang-flag{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.lname{font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;letter-spacing:.04em}
+.lnat{font-size:.67rem;color:var(--m);margin-top:.15rem}
+
+/* Pricing */
+.price-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;max-width:880px;margin:0 auto}
+.price-c{background:var(--c);border:1px solid var(--br);padding:2.2rem 1.8rem;position:relative;transition:transform .25s;border-radius:2px}
+.price-c.feat{border-color:var(--b);box-shadow:0 0 38px var(--bd)}
+.price-c:hover{transform:translateY(-4px)}
+.pbadge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--b);color:var(--k);padding:.22rem .9rem;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.pplan{font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--m);margin-bottom:.9rem}
+.pamnt{font-family:'Orbitron',monospace;font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:.25rem}
+.price-c.feat .pamnt{color:var(--b)}
+.pper{font-size:.72rem;color:var(--m);margin-bottom:1.8rem}
+.pfeats{list-style:none;margin-bottom:1.8rem}
+.pfeats li{padding:.52rem 0;border-bottom:1px solid var(--br);font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:.55rem}
+.pfeats .ok{color:var(--u)}
+.pfeats .no{color:var(--m)}
+.btn-full{width:100%;justify-content:center}
+
+/* Reviews */
+.rev-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.1rem}
+.rev{background:var(--c);border:1px solid var(--br);padding:1.4rem;position:relative;overflow:hidden;border-radius:2px}
+.rev::before{content:'"';position:absolute;top:-.8rem;right:.8rem;font-size:7rem;font-family:'Orbitron',monospace;color:var(--bd);line-height:1;pointer-events:none}
+.rstars{color:var(--u);font-size:.85rem;margin-bottom:.7rem;letter-spacing:.08em}
+.rtext{font-size:.88rem;line-height:1.62;color:#bbb;margin-bottom:1.1rem}
+.rauth{display:flex;align-items:center;gap:.7rem}
+.ravtr{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--bd)}
+.rname{font-weight:700;font-size:.82rem;letter-spacing:.04em}
+.rhandle{font-size:.68rem;color:var(--m)}
+
+/* App section */
+.app{background:linear-gradient(135deg,var(--c),var(--k));border:1px solid var(--br);padding:4.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;margin:0 5%;position:relative;overflow:hidden;border-radius:2px}
+.app::before{content:'';position:absolute;top:-80px;right:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,var(--bd),transparent 70%);pointer-events:none}
+.app-title{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,2.8vw,2.3rem);font-weight:900;line-height:1.22;margin-bottom:.9rem}
+.app-desc{color:#aaa;line-height:1.68;margin-bottom:1.8rem;font-size:.92rem}
+.app-btns{display:flex;gap:.9rem;flex-wrap:wrap}
+.app-btn{display:flex;align-items:center;gap:.65rem;background:var(--c);border:1px solid var(--br);padding:.65rem 1.1rem;cursor:pointer;transition:all .25s;border-radius:2px}
+.app-btn:hover{border-color:var(--b);background:var(--bd)}
+.app-btn svg{width:22px;height:22px}
+.ablbl{font-size:.66rem;color:var(--m);letter-spacing:.04em}
+.abst{font-family:'Orbitron',monospace;font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.phone{width:205px;height:415px;border:2px solid var(--b);border-radius:22px;overflow:hidden;margin:0 auto;box-shadow:0 0 55px var(--bd)}
+.phone img{width:100%;height:100%;object-fit:cover}
+
+/* Footer */
+footer{background:var(--d);border-top:1px solid var(--br);padding:3.5rem 5% 1.8rem;margin-top:4.5rem}
+.ft-g{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+.ft-desc{font-size:.82rem;color:var(--m);line-height:1.68;max-width:270px;margin-top:.8rem}
+.ft-soc{display:flex;gap:.7rem;margin-top:1.3rem}
+.soc-btn{width:34px;height:34px;border:1px solid var(--br);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;color:var(--m);border-radius:2px;font-size:.82rem}
+.soc-btn:hover{border-color:var(--b);color:var(--b)}
+.ft-ct{font-family:'Orbitron',monospace;font-size:.67rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--b);margin-bottom:1.1rem}
+.ft-l{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.ft-l a{color:var(--m);font-size:.82rem;transition:color .18s,padding-left .18s}
+.ft-l a:hover{color:var(--w);padding-left:4px}
+.ft-btm{border-top:1px solid var(--br);padding-top:1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.ft-leg{font-size:.72rem;color:var(--m);letter-spacing:.04em}
+.ft-leg a{color:var(--b)}
+
+/* Fade-in */
+.fi{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fi.on{opacity:1;transform:none}
+
+/* Movie card wide */
+.card-w{flex:0 0 255px}
+.card-w img{aspect-ratio:16/9}
+
+/* Responsive */
+@media(max-width:1100px){.sched{grid-template-columns:repeat(4,1fr)}.stats-g{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.feat-strip{grid-template-columns:1fr}.feat-main{grid-row:auto}.two{grid-template-columns:1fr}.price-g{grid-template-columns:1fr}.ft-g{grid-template-columns:1fr 1fr}.app{grid-template-columns:1fr;padding:3rem 2rem;margin:0 5%}.nav-links{display:none}.sched{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.stats-g{grid-template-columns:repeat(2,1fr)}.sched{grid-template-columns:repeat(2,1fr)}.ft-g{grid-template-columns:1fr}.app-btns{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cring"></div>
+
+<nav id="nav">
+  <a class="logo" href="#"><span>AURA</span></a>
+  <ul class="nav-links">
+    <li><a href="#trending">Trending</a></li>
+    <li><a href="#sched">Schedule</a></li>
+    <li><a href="#genres">Genres</a></li>
+    <li><a href="#movies">Movies</a></li>
+    <li><a href="#plan">Plans</a></li>
+  </ul>
+  <div class="nav-r">
+    <select class="lang" id="ls" aria-label="Language">
+      <option value="en">🌐 EN</option>
+      <option value="ja">JA 日本語</option>
+      <option value="es">ES Español</option>
+      <option value="fr">FR Français</option>
+      <option value="de">DE Deutsch</option>
+      <option value="pt">PT Português</option>
+      <option value="ko">KO 한국어</option>
+      <option value="zh">ZH 中文</option>
+    </select>
+    <a href="#" class="btn btn-b">Sign In</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home" aria-label="Hero">
+  <div class="hero-bg" role="img" aria-label="Attack on Titan background"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-c fi">
+    <div class="badge">● Now Streaming</div>
+    <h1 class="hero-title" id="ht">Attack on<br><span class="a">Titan</span><br>Final Season</h1>
+    <div class="hero-meta">
+      <span class="r">★ 9.1</span><span class="dot">·</span>
+      <span>2023</span><span class="dot">·</span>
+      <span class="tag">Action</span><span class="tag">Dark Fantasy</span><span class="tag">SUB · DUB</span>
+    </div>
+    <p class="hero-desc">In the final chapter, Eren Yeager initiates the Rumbling — unleashing the Wall Titans to annihilate all life beyond Paradis Island. The Survey Corps must make an impossible choice to stop their former comrade.</p>
+    <div class="hero-acts">
+      <a href="#" class="btn btn-play">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        Watch Now
+      </a>
+      <a href="#" class="btn btn-u">+ Watchlist</a>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marq" aria-hidden="true">
+  <div class="marq-t">
+    <span class="marq-i"><span class="d">◆</span>4K Ultra HD</span>
+    <span class="marq-i"><span class="d">◆</span>50,000+ Episodes</span>
+    <span class="marq-i"><span class="d">◆</span>8 Languages</span>
+    <span class="marq-i"><span class="d">◆</span>Simulcast</span>
+    <span class="marq-i"><span class="d">◆</span>No Ads</span>
+    <span class="marq-i"><span class="d">◆</span>Offline Download</span>
+    <span class="marq-i"><span class="d">◆</span>Sub &amp; Dub</span>
+    <span class="marq-i"><span class="d">◆</span>4K Ultra HD</span>
+    <span class="marq-i"><span class="d">◆</span>50,000+ Episodes</span>
+    <span class="marq-i"><span class="d">◆</span>8 Languages</span>
+    <span class="marq-i"><span class="d">◆</span>Simulcast</span>
+    <span class="marq-i"><span class="d">◆</span>No Ads</span>
+    <span class="marq-i"><span class="d">◆</span>Offline Download</span>
+    <span class="marq-i"><span class="d">◆</span>Sub &amp; Dub</span>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="srch-sec">
+  <div class="srch-w">
+    <label for="srch" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">Search</label>
+    <input class="srch-i" id="srch" type="search" placeholder="Search anime, genres, studios..." autocomplete="off">
+    <span class="srch-ic" aria-hidden="true">⌕</span>
+  </div>
+  <div class="srch-tags" aria-label="Quick search tags">
+    <button class="stag">Action</button><button class="stag">Romance</button><button class="stag">Fantasy</button>
+    <button class="stag">Horror</button><button class="stag">Isekai</button><button class="stag">Mecha</button>
+    <button class="stag">Sports</button><button class="stag">Slice of Life</button><button class="stag">Psychological</button>
+  </div>
+</div>
+
+<!-- TRENDING -->
+<section id="trending">
+  <div class="sec-hd fi"><h2 class="sec-t">Trending Now</h2><a href="#" class="view-all">View All →</a></div>
+  <div class="hscroll">
+    <div class="row" role="list">
+
+      <article class="card" role="listitem">
+        <div class="cbadge hot">HOT</div>
+        <img src="https://i.pinimg.com/736x/52/1b/ee/521beebde26a538eac66856897d88a9b.jpg" alt="Jujutsu Kaisen" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">Jujutsu Kaisen</div><div class="cmeta"><span class="ep">EP 47</span><span>2024</span><span>Action</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+      <article class="card" role="listitem">
+        <div class="cbadge new">NEW</div>
+        <img src="https://i.pinimg.com/1200x/0c/da/bc/0cdabcec68efda583fa6c02e0a961b65.jpg" alt="Demon Slayer" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">Demon Slayer</div><div class="cmeta"><span class="ep">EP 11</span><span>2024</span><span>Action</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+      <article class="card" role="listitem">
+        <img src="https://i.pinimg.com/736x/c9/87/a2/c987a28ac0b72afc74b1984dd7717c2a.jpg" alt="One Piece" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">One Piece</div><div class="cmeta"><span class="ep">EP 1100+</span><span>2024</span><span>Adventure</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+      <article class="card" role="listitem">
+        <div class="cbadge dub">DUB</div>
+        <img src="https://i.pinimg.com/736x/a1/46/7f/a1467fb9dfe067858af2003ef8925569.jpg" alt="Chainsaw Man" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">Chainsaw Man</div><div class="cmeta"><span class="ep">EP 12</span><span>2023</span><span>Dark</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+      <article class="card" role="listitem">
+        <img src="https://i.pinimg.com/1200x/3b/68/d1/3b68d1e828307852dcabffc0937e0d28.jpg" alt="Spy x Family" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">Spy × Family</div><div class="cmeta"><span class="ep">EP 37</span><span>2024</span><span>Comedy</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+      <article class="card" role="listitem">
+        <div class="cbadge new">NEW</div>
+        <img src="https://i.pinimg.com/1200x/bd/19/dc/bd19dc971a4089961c7249b2e23baab9.jpg" alt="Blue Lock" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">Blue Lock</div><div class="cmeta"><span class="ep">EP 24</span><span>2024</span><span>Sports</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+      <article class="card" role="listitem">
+        <img src="https://i.pinimg.com/736x/f6/0d/04/f60d04e09f4ca00ba1ff203274e737b9.jpg" alt="Vinland Saga" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">Vinland Saga</div><div class="cmeta"><span class="ep">S2 Complete</span><span>2023</span><span>Historical</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+      <article class="card" role="listitem">
+        <img src="https://i.pinimg.com/736x/36/9d/08/369d08ed42607b381bede54b8fb5f54b.jpg" alt="Mushoku Tensei" loading="lazy" width="195" height="292">
+        <div class="cov"><div class="cinfo"><div class="ctitle">Mushoku Tensei II</div><div class="cmeta"><span class="ep">EP 23</span><span>2024</span><span>Isekai</span></div><button class="cplay">▶ Play</button></div></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDITOR'S PICKS + TOP AIRING -->
+<section style="padding-top:0">
+  <div class="two fi">
+    <div>
+      <div class="sec-hd"><h2 class="sec-t g">Editor's Picks</h2></div>
+      <div class="feat-strip">
+        <div class="feat-main">
+          <img src="https://i.pinimg.com/1200x/3c/e4/5f/3ce45fd76df1d0a9b7b001cceb9e6c92.jpg" alt="Fullmetal Alchemist Brotherhood" loading="lazy" width="400" height="580">
+          <div class="feat-ov">
+            <div style="font-size:.67rem;letter-spacing:.14em;color:var(--u);text-transform:uppercase;font-weight:700;margin-bottom:.45rem">★ 9.1 · All Time Classic</div>
+            <div style="font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;margin-bottom:.45rem">Fullmetal Alchemist:<br>Brotherhood</div>
+            <p style="font-size:.78rem;color:#aaa;margin-bottom:.9rem;line-height:1.55">Two brothers seek the Philosopher's Stone after a failed alchemy attempt costs them everything.</p>
+            <a href="#" class="btn btn-play" style="font-size:.72rem;padding:.48rem 1.1rem">▶ Watch Now</a>
+          </div>
+        </div>
+        <div>
+          <div class="feat-sm" style="margin-bottom:1.1rem">
+            <img src="https://i.pinimg.com/1200x/8c/8c/f8/8c8cf82e29b0dac52512fabeca23e2c6.jpg" alt="Hunter x Hunter" loading="lazy" width="220" height="155">
+            <div class="feat-sm-ov">
+              <div style="font-size:.62rem;letter-spacing:.09em;color:var(--b);text-transform:uppercase;margin-bottom:.25rem">★ 9.0 · Adventure</div>
+              <div style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700">Hunter × Hunter</div>
+            </div>
+          </div>
+          <div class="feat-sm">
+            <img src="https://i.pinimg.com/736x/85/a5/4e/85a54e980915399af7fbf64b7c317df4.jpg" alt="Neon Genesis Evangelion" loading="lazy" width="220" height="155">
+            <div class="feat-sm-ov">
+              <div style="font-size:.62rem;letter-spacing:.09em;color:var(--b);text-transform:uppercase;margin-bottom:.25rem">★ 8.5 · Mecha</div>
+              <div style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700">Neon Genesis Evangelion</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-hd"><h2 class="sec-t">Top Airing</h2></div>
+      <div class="top-list" role="list">
+        <div class="top-i" role="listitem"><div class="top-rank">01</div><img class="top-th" src="https://i.pinimg.com/736x/32/0f/22/320f221b8969be6c496076c902a4aab0.jpg" alt="JJK" loading="lazy" width="46" height="63"><div class="top-info"><div class="top-n">Jujutsu Kaisen S2</div><div class="top-m">EP 47 · Action · Fall 2024</div></div><div class="top-sc">9.2</div></div>
+        <div class="top-i" role="listitem"><div class="top-rank">02</div><img class="top-th" src="https://i.pinimg.com/736x/dd/b2/15/ddb2157381db14212f074b012127d7ce.jpg" alt="Demon Slayer" loading="lazy" width="46" height="63"><div class="top-info"><div class="top-n">Demon Slayer: Hashira</div><div class="top-m">EP 11 · Action · 2024</div></div><div class="top-sc">9.0</div></div>
+        <div class="top-i" role="listitem"><div class="top-rank">03</div><img class="top-th" src="https://i.pinimg.com/736x/9e/fc/80/9efc80a8011286a28f567ac35f12edfc.jpg" alt="Spy x Family" loading="lazy" width="46" height="63"><div class="top-info"><div class="top-n">Spy × Family Part 3</div><div class="top-m">EP 37 · Comedy · 2024</div></div><div class="top-sc">8.9</div></div>
+        <div class="top-i" role="listitem"><div class="top-rank">04</div><img class="top-th" src="https://i.pinimg.com/736x/42/31/fc/4231fc0dd0a10043d3c82f05108c5b41.jpg" alt="Blue Lock" loading="lazy" width="46" height="63"><div class="top-info"><div class="top-n">Blue Lock Season 2</div><div class="top-m">EP 24 · Sports · 2024</div></div><div class="top-sc">8.7</div></div>
+        <div class="top-i" role="listitem"><div class="top-rank">05</div><img class="top-th" src="https://i.pinimg.com/1200x/6f/ce/38/6fce38f0d29f1c33929de272ecb34beb.jpg" alt="Mushoku Tensei" loading="lazy" width="46" height="63"><div class="top-info"><div class="top-n">Mushoku Tensei II</div><div class="top-m">EP 23 · Isekai · 2024</div></div><div class="top-sc">8.6</div></div>
+        <div class="top-i" role="listitem"><div class="top-rank">06</div><img class="top-th" src="https://i.pinimg.com/1200x/e9/fb/4f/e9fb4f41267c0cf6121c3ccb80bad75d.jpg" alt="One Piece" loading="lazy" width="46" height="63"><div class="top-info"><div class="top-n">One Piece: Egghead Arc</div><div class="top-m">EP 1100+ · Adventure</div></div><div class="top-sc">8.4</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT -->
+<div class="spot" aria-label="Spotlight: Sword Art Online">
+  <div class="spot-bg" role="img" aria-label="Sword Art Online Alicization background"></div>
+  <div class="spot-grad"></div>
+  <div class="spot-c fi">
+    <div class="badge">● Spotlight — New Season</div>
+    <h2 style="font-family:'Orbitron',monospace;font-size:clamp(1.9rem,3.8vw,3.3rem);font-weight:900;line-height:1.1;margin:1rem 0">Sword Art Online<br><span style="color:var(--b)">Alicization</span></h2>
+    <p style="color:#aaa;max-width:460px;line-height:1.68;margin-bottom:1.4rem;font-size:.92rem">Kirito wakes in a virtual world with no memory of how he got there. He must unravel the mysteries of the Underworld before time runs out.</p>
+    <div style="display:flex;gap:.9rem;flex-wrap:wrap">
+      <a href="#" class="btn btn-play">▶ Watch Now</a>
+      <a href="#" class="btn btn-b">More Info</a>
+    </div>
+  </div>
+</div>
+
+<!-- NEW RELEASES -->
+<section>
+  <div class="sec-hd fi"><h2 class="sec-t">New Releases</h2><a href="#" class="view-all">View All →</a></div>
+  <div class="grid fi" role="list">
+    <article class="card" role="listitem"><div class="cbadge new">NEW</div><img src="https://i.pinimg.com/1200x/2a/79/19/2a7919a506b5f57b807531fa055b7de6.jpg" alt="My Hero Academia" loading="lazy" width="195" height="292"><div class="cov"><div class="cinfo"><div class="ctitle">My Hero Academia: Final</div><div class="cmeta"><span class="ep">EP 21</span><span>Action</span></div><button class="cplay">▶ Play</button></div></div></article>
+    <article class="card" role="listitem"><img src="https://i.pinimg.com/1200x/0e/51/6c/0e516cb58678f6ca0a5b0b79d2113690.jpg" alt="Overlord IV" loading="lazy" width="195" height="292"><div class="cov"><div class="cinfo"><div class="ctitle">Overlord IV</div><div class="cmeta"><span class="ep">EP 13</span><span>Isekai</span></div><button class="cplay">▶ Play</button></div></div></article>
+    <article class="card" role="listitem"><div class="cbadge hot">HOT</div><img src="https://i.pinimg.com/736x/f7/c3/1a/f7c31a2870e425053d488e5cc4f21220.jpg" alt="Bleach TYBW" loading="lazy" width="195" height="292"><div class="cov"><div class="cinfo"><div class="ctitle">Bleach: TYBW Part 3</div><div class="cmeta"><span class="ep">EP 52+</span><span>Action</span></div><button class="cplay">▶ Play</button></div></div></article>
+    <article class="card" role="listitem"><img src="https://i.pinimg.com/736x/02/31/db/0231dbc25fd2900b0d32e116481732e4.jpg" alt="Black Clover Movie" loading="lazy" width="195" height="292"><div class="cov"><div class="cinfo"><div class="ctitle">Black Clover: Movie</div><div class="cmeta"><span class="ep">Film</span><span>Fantasy</span></div><button class="cplay">▶ Play</button></div></div></article>
+    <article class="card" role="listitem"><div class="cbadge dub">DUB</div><img src="https://i.pinimg.com/1200x/f9/83/43/f9834399ecd2747022321664ac1d100f.jpg" alt="Re:Zero Season 3" loading="lazy" width="195" height="292"><div class="cov"><div class="cinfo"><div class="ctitle">Re:Zero Season 3</div><div class="cmeta"><span class="ep">EP 15</span><span>Fantasy</span></div><button class="cplay">▶ Play</button></div></div></article>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="sched">
+  <div class="sec-hd fi"><h2 class="sec-t g">Airing Schedule</h2><span style="font-size:.78rem;color:var(--m);letter-spacing:.04em">Week of May 5–11, 2026</span></div>
+  <div class="sched fi" role="table" aria-label="Weekly airing schedule">
+    <div class="sday"><div class="dlbl">Mon</div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/736x/49/1f/45/491f451fdb27a46d1cc1149486ce1f89.jpg" alt="JJK" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Jujutsu Kaisen</div><div class="sep">EP 47</div></div></div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/1200x/bd/19/dc/bd19dc971a4089961c7249b2e23baab9.jpg" alt="Blue Lock" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Blue Lock</div><div class="sep">EP 24</div></div></div>
+    </div>
+    <div class="sday today"><div class="dlbl">Tue · Today</div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/1200x/c3/64/69/c364691569caf1e26c67d0497bd739ea.jpg" alt="Demon Slayer" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Demon Slayer</div><div class="sep">EP 11 · NEW</div></div></div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/1200x/3b/68/d1/bc1q4h3rk4hgruu7auyf0dpxtx6hsh86xpq04jx5g5.jpg" alt="Spy x Family" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Spy × Family</div><div class="sep">EP 37 · NEW</div></div></div>
+    </div>
+    <div class="sday"><div class="dlbl">Wed</div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/736x/30/ff/42/30ff422aac17703702e408efe865df95.jpg" alt="One Piece" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">One Piece</div><div class="sep">EP 1102</div></div></div>
+    </div>
+    <div class="sday"><div class="dlbl">Thu</div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/736x/59/ca/46/59ca4655acfad91ad48a3df6469ff8d4.jpg" alt="Mushoku Tensei" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Mushoku Tensei</div><div class="sep">EP 23</div></div></div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/1200x/ac/e9/77/ace9779153b6783f6d01a1d34ce688a0.jpg" alt="My Hero Academia" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">My Hero Academia</div><div class="sep">EP 21</div></div></div>
+    </div>
+    <div class="sday"><div class="dlbl">Fri</div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/736x/26/3b/68/263b6891c6963c12c8a5466288abb1b2.jpg" alt="Bleach" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Bleach: TYBW</div><div class="sep">EP 53</div></div></div>
+    </div>
+    <div class="sday"><div class="dlbl">Sat</div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/736x/de/8f/52/de8f52414e86a41879535b1fd2030db7.jpg" alt="Chainsaw Man" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Chainsaw Man</div><div class="sep">EP 14</div></div></div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/1200x/3b/68/d1/3b68d1e828307852dcabffc0937e0d28.jpg" alt="Spy x Family" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Spy × Family</div><div class="sep">EP 38</div></div></div>
+    </div>
+    <div class="sday"><div class="dlbl">Sun</div>
+      <div class="sitem"><img class="sth" src="https://i.pinimg.com/736x/bd/80/57/bd80571c1a2a97f75725d1ed04f4225c.jpg" alt="Dragon Ball" loading="lazy" width="30" height="42"><div class="sinf"><div class="sn">Dragon Ball Super</div><div class="sep">Movie</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GENRES -->
+<section id="genres">
+  <div class="sec-hd fi"><h2 class="sec-t">Browse Genres</h2></div>
+  <div class="genres fi" role="list">
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://i.pinimg.com/736x/45/15/40/45154077b159bbdb4ff0fb9a487cf552.jpg')"></div><div class="gname">Action</div><div class="gcnt">4,200+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://i.pinimg.com/1200x/b2/88/53/b288539d28e799dd4ab0b1181e75ffaa.jpg')"></div><div class="gname">Romance</div><div class="gcnt">2,800+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://wallpapers.com/images/hd/fantasy-anime-1225-x-700-wallpaper-iaxkuw3w668d8obv.jpg')"></div><div class="gname">Fantasy</div><div class="gcnt">5,100+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://static0.colliderimages.com/wordpress/wp-content/uploads/2022/12/best-horror-anime.jpg')"></div><div class="gname">Horror</div><div class="gcnt">980+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://www.animationmagazine.net/wordpress/wp-content/uploads/My-Status-as-an-Assassin-Obviously-Exceeds-the-Heros.jpg')"></div><div class="gname">Isekai</div><div class="gcnt">1,400+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/642fe9d50ff3d476932fc101/c9fadfdd-a52d-4eb8-8d7d-9e285408cd2a/The+Vision+of+Escaflowne.jpg')"></div><div class="gname">Mecha</div><div class="gcnt">1,200+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://m.media-amazon.com/images/M/MV5BMDkyYmY5YzgtZjJiMy00ZWVjLTgyOTgtZDAxYWFiMGU0NTAwXkEyXkFqcGc@._V1_QL75_UX500_CR0,0,500,281_.jpg')"></div><div class="gname">Sports</div><div class="gcnt">760+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://sm.ign.com/ign_de/screenshot/default/one-piece-staffeln_wp7g.jpg')"></div><div class="gname">Adventure</div><div class="gcnt">3,400+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://oocentral.ca/wp-content/uploads/2017/12/783031.jpg')"></div><div class="gname">Psychological</div><div class="gcnt">620+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://static0.colliderimages.com/wordpress/wp-content/uploads/2024/09/apothecary-diaries.jpg')"></div><div class="gname">Historical</div><div class="gcnt">840+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://cms.animecollective.com/wp-content/uploads/2022/04/best-anime-on-netflix-komi-cant-communicate-1-767x431.jpeg')"></div><div class="gname">Comedy</div><div class="gcnt">2,600+ Anime</div></div>
+    <div class="genre" role="listitem"><div class="gbg" style="background-image:url('https://miro.medium.com/1*ctLtavqXLgdcirHINuuFhw.jpeg')"></div><div class="gname">Sci-Fi</div><div class="gcnt">1,100+ Anime</div></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats fi" role="region" aria-label="Platform statistics">
+  <div class="stats-g">
+    <div><div class="sv" aria-label="50,000 plus episodes">50K+</div><div class="sl">Episodes</div></div>
+    <div><div class="sv" aria-label="12 million plus users">12M+</div><div class="sl">Active Users</div></div>
+    <div><div class="sv" aria-label="8 languages">8</div><div class="sl">Languages</div></div>
+    <div><div class="sv" aria-label="4K Ultra HD">4K</div><div class="sl">Ultra HD</div></div>
+  </div>
+</div>
+
+<!-- MOVIES -->
+<section id="movies">
+  <div class="sec-hd fi"><h2 class="sec-t">Anime Movies</h2><a href="#" class="view-all">View All →</a></div>
+  <div class="hscroll fi">
+    <div class="row" role="list">
+      <article class="card card-w" role="listitem"><img src="https://ychef.files.bbci.co.uk/1280x720/p09f3lcg.jpg" alt="Spirited Away" loading="lazy" width="255" height="143"><div class="cov"><div class="cinfo"><div class="ctitle">Spirited Away</div><div class="cmeta"><span class="ep">Film · 2001</span><span>Studio Ghibli</span></div><button class="cplay">▶ Play</button></div></div></article>
+      <article class="card card-w" role="listitem"><img src="https://i0.wp.com/cuttothetake.com/wp-content/uploads/2025/08/Title-3.jpg?fit=1200%2C675&ssl=1" alt="Princess Mononoke" loading="lazy" width="255" height="143"><div class="cov"><div class="cinfo"><div class="ctitle">Princess Mononoke</div><div class="cmeta"><span class="ep">Film · 1997</span><span>Studio Ghibli</span></div><button class="cplay">▶ Play</button></div></div></article>
+      <article class="card card-w" role="listitem"><img src="https://i.pinimg.com/1200x/e1/b0/dc/e1b0dcced90203de43c7514e9b81e0a1.jpg" alt="Your Name" loading="lazy" width="255" height="143"><div class="cov"><div class="cinfo"><div class="ctitle">Your Name</div><div class="cmeta"><span class="ep">Film · 2016</span><span>CoMix Wave</span></div><button class="cplay">▶ Play</button></div></div></article>
+      <article class="card card-w" role="listitem"><img src="https://m.media-amazon.com/images/I/719v7ckok7L._AC_UF894,1000_QL80_.jpg" alt="Mugen Train" loading="lazy" width="255" height="143"><div class="cov"><div class="cinfo"><div class="ctitle">Demon Slayer: Mugen Train</div><div class="cmeta"><span class="ep">Film · 2020</span><span>ufotable</span></div><button class="cplay">▶ Play</button></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section>
+  <div class="sec-hd fi"><h2 class="sec-t g">Watch in Your Language</h2></div>
+  <div class="langs fi" role="list">
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/jp.png" alt="Japan flag" loading="lazy" width="34" height="34"><div><div class="lname">Japanese</div><div class="lnat">日本語</div></div></div>
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/us.png" alt="US flag" loading="lazy" width="34" height="34"><div><div class="lname">English</div><div class="lnat">English</div></div></div>
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/es.png" alt="Spain flag" loading="lazy" width="34" height="34"><div><div class="lname">Spanish</div><div class="lnat">Español</div></div></div>
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/fr.png" alt="France flag" loading="lazy" width="34" height="34"><div><div class="lname">French</div><div class="lnat">Français</div></div></div>
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/de.png" alt="Germany flag" loading="lazy" width="34" height="34"><div><div class="lname">German</div><div class="lnat">Deutsch</div></div></div>
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/pt.png" alt="Portugal flag" loading="lazy" width="34" height="34"><div><div class="lname">Portuguese</div><div class="lnat">Português</div></div></div>
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/kr.png" alt="Korea flag" loading="lazy" width="34" height="34"><div><div class="lname">Korean</div><div class="lnat">한국어</div></div></div>
+    <div class="lang-c" role="listitem"><img class="lang-flag" src="https://flagcdn.com/w80/cn.png" alt="China flag" loading="lazy" width="34" height="34"><div><div class="lname">Chinese</div><div class="lnat">中文</div></div></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="plan">
+  <div class="sec-hd fi" style="justify-content:center;flex-direction:column;align-items:center;gap:.5rem;text-align:center">
+    <h2 class="sec-t" style="padding-left:0">Choose Your Plan</h2>
+    <p style="color:var(--m);font-size:.88rem;letter-spacing:.04em">No ads. No limits. Pure anime.</p>
+  </div>
+  <div class="price-g fi">
+    <div class="price-c">
+      <div class="pplan">Free</div>
+      <div class="pamnt">$0</div>
+      <div class="pper">Forever free</div>
+      <ul class="pfeats">
+        <li><span class="ok">✓</span>720p quality</li>
+        <li><span class="ok">✓</span>1 device</li>
+        <li><span class="no">✗</span>Ads shown</li>
+        <li><span class="no">✗</span>Offline download</li>
+        <li><span class="no">✗</span>Simulcast</li>
+      </ul>
+      <a href="#" class="btn btn-b btn-full">Get Started</a>
+    </div>
+    <div class="price-c feat">
+      <div class="pbadge">MOST POPULAR</div>
+      <div class="pplan">Pro</div>
+      <div class="pamnt">$9.99</div>
+      <div class="pper">per month</div>
+      <ul class="pfeats">
+        <li><span class="ok">✓</span>4K Ultra HD</li>
+        <li><span class="ok">✓</span>3 devices</li>
+        <li><span class="ok">✓</span>No ads</li>
+        <li><span class="ok">✓</span>Offline download</li>
+        <li><span class="ok">✓</span>Simulcast access</li>
+      </ul>
+      <a href="#" class="btn btn-play btn-full">Start Free Trial</a>
+    </div>
+    <div class="price-c">
+      <div class="pplan">Ultra</div>
+      <div class="pamnt">$14.99</div>
+      <div class="pper">per month</div>
+      <ul class="pfeats">
+        <li><span class="ok">✓</span>8K + HDR</li>
+        <li><span class="ok">✓</span>6 devices</li>
+        <li><span class="ok">✓</span>No ads + early access</li>
+        <li><span class="ok">✓</span>Unlimited downloads</li>
+        <li><span class="ok">✓</span>Exclusive content</li>
+      </ul>
+      <a href="#" class="btn btn-u btn-full">Go Ultra</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section>
+  <div class="sec-hd fi"><h2 class="sec-t">Community Reviews</h2></div>
+  <div class="rev-g fi" role="list">
+    <div class="rev" role="listitem"><div class="rstars">★★★★★</div><p class="rtext">AURA completely replaced all other streaming apps for me. The quality and library are unmatched. The ghost blue UI is honestly art.</p><div class="rauth"><img class="ravtr" src="https://i.pravatar.cc/150?img=12" alt="Yuki Tanaka" loading="lazy" width="34" height="34"><div><div class="rname">Yuki Tanaka</div><div class="rhandle">@yukistream</div></div></div></div>
+    <div class="rev" role="listitem"><div class="rstars">★★★★★</div><p class="rtext">The simulcast feature means I watch new episodes same day as Japan. 4K quality is insane. Worth every penny of the Pro plan.</p><div class="rauth"><img class="ravtr" src="https://i.pravatar.cc/150?img=33" alt="Carlos Rivera" loading="lazy" width="34" height="34"><div><div class="rname">Carlos Rivera</div><div class="rhandle">@anime_carv</div></div></div></div>
+    <div class="rev" role="listitem"><div class="rstars">★★★★☆</div><p class="rtext">Finally a platform that takes sub and dub seriously. Portuguese dubs are excellent here. The schedule tracker is a lifesaver.</p><div class="rauth"><img class="ravtr" src="https://i.pravatar.cc/150?img=45" alt="Marie Dupont" loading="lazy" width="34" height="34"><div><div class="rname">Marie Dupont</div><div class="rhandle">@mariedanime</div></div></div></div>
+  </div>
+</section>
+
+<!-- APP DOWNLOAD -->
+<div class="app fi" role="region" aria-label="Download the AURA app">
+  <div>
+    <div class="badge" style="display:inline-flex;margin-bottom:1.4rem">● Available Now</div>
+    <h2 class="app-title">Take AURA<br><span style="color:var(--b)">Everywhere</span></h2>
+    <p class="app-desc">Watch favourite anime on any device, anytime. Download episodes offline. Get instant notifications when new episodes drop.</p>
+    <div class="app-btns">
+      <div class="app-btn" role="button" aria-label="Download on App Store">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div><div class="ablbl">Download on the</div><div class="abst">App Store</div></div>
+      </div>
+      <div class="app-btn" role="button" aria-label="Get it on Google Play">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.18 23.76c.3.17.65.19.97.08L13.86 12 3.18.16c-.33-.11-.67-.1-.97.08C1.75.56 1.5 1.04 1.5 1.61v20.78c0 .57.25 1.05.68 1.37zm17.64-11.39L18.41 11l-2.96 2.96 2.96 2.96 2.43-1.37c.69-.39.69-1.38 0-1.77zM4.47.32L14.1 9.95l-3.35 3.35L3.37.81C3.56.47 4 .14 4.47.32zm0 23.36c-.47.18-.91-.15-1.1-.49l7.38-11.48 3.35 3.35-9.63 8.62z"/></svg>
+        <div><div class="ablbl">Get it on</div><div class="abst">Google Play</div></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="phone">
+      <img src="https://cdn.myanimelist.net/images/anime/1286/99889l.jpg" alt="AURA mobile app preview" loading="lazy" width="205" height="415">
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-g">
+    <div>
+      <a class="logo" href="#" style="font-size:1.5rem;display:block"><span>AURA</span></a>
+      <p class="ft-desc">The ultimate anime streaming platform. Stream thousands of series and movies in 4K with subs and dubs in 8 languages.</p>
+      <div class="ft-soc" aria-label="Social links">
+        <a href="#" class="soc-btn" aria-label="X / Twitter">𝕏</a>
+        <a href="#" class="soc-btn" aria-label="LinkedIn">in</a>
+        <a href="#" class="soc-btn" aria-label="YouTube">▶</a>
+        <a href="#" class="soc-btn" aria-label="Instagram">◎</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-ct">Explore</div>
+      <ul class="ft-l">
+        <li><a href="#">Trending Anime</a></li>
+        <li><a href="#">New Releases</a></li>
+        <li><a href="#">Movies</a></li>
+        <li><a href="#">Schedule</a></li>
+        <li><a href="#">Genres</a></li>
+        <li><a href="#">Studios</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-ct">Account</div>
+      <ul class="ft-l">
+        <li><a href="#">Sign Up</a></li>
+        <li><a href="#">Sign In</a></li>
+        <li><a href="#">My Watchlist</a></li>
+        <li><a href="#">Manage Profile</a></li>
+        <li><a href="#">Subscription</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-ct">Support</div>
+      <ul class="ft-l">
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">DMCA</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-btm">
+    <div class="ft-leg">© 2026 AURA Inc. All rights reserved. · <a href="#">Privacy</a> · <a href="#">Terms</a></div>
+    <div class="ft-leg" style="color:var(--b)">AURA v3.1.0</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  // Cursor — RAF-based, will-change optimized
+  const cur=document.getElementById('cur'),ring=document.getElementById('cring');
+  let mx=0,my=0,rx=0,ry=0,raf;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY},{passive:true});
+  function tick(){
+    cur.style.transform=`translate(${mx-5}px,${my-5}px)`;
+    rx+=(mx-rx-17)*.11;ry+=(my-ry-17)*.11;
+    ring.style.transform=`translate(${rx}px,${ry}px)`;
+    raf=requestAnimationFrame(tick);
+  }
+  tick();
+  const hov='a,button,.card,.genre,.top-i,.lang-c';
+  document.addEventListener('mouseover',e=>{
+    if(e.target.closest(hov)){ring.style.borderColor='var(--u)';ring.style.transform+=' scale(1.3)'}
+  },{passive:true});
+  document.addEventListener('mouseout',e=>{
+    if(e.target.closest(hov)){ring.style.borderColor='var(--b)'}
+  },{passive:true});
+
+  // Nav scroll
+  const nav=document.getElementById('nav');
+  let lastSY=0;
+  window.addEventListener('scroll',()=>{
+    const sy=window.scrollY;
+    nav.style.background=sy>80?'rgba(8,8,8,.97)':'';
+    lastSY=sy;
+  },{passive:true});
+
+  // IntersectionObserver fade-in
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}});
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+  // Search tag → fill input
+  document.querySelectorAll('.stag').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.getElementById('srch').value=btn.textContent;
+      document.getElementById('srch').focus();
+    });
+  });
+
+  // Language switcher
+  const seasons={en:'Final Season',ja:'ファイナルシーズン',es:'Temporada Final',fr:'Saison Finale',de:'Letzte Staffel',pt:'Temporada Final',ko:'파이널 시즌',zh:'最终季'};
+  document.getElementById('ls').addEventListener('change',function(){
+    const s=seasons[this.value]||seasons.en;
+    document.getElementById('ht').innerHTML=`Attack on<br><span class="a">Titan</span><br>${s}`;
+  });
+})();
+</script>
+</body>
+</html>
