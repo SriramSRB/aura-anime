@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_vpc" "aura_anime_vpc" {
     cidr_block = "10.0.0.0/16"
-    tags       = [ Name = "aura-anime-vpc" ]
+    tags       = { Name = "aura-anime-vpc" }
 }
 
 resource "aws_subnet" "aura_anime_subnet" {
@@ -12,7 +12,7 @@ resource "aws_subnet" "aura_anime_subnet" {
     cidr_block              = "10.0.0.0/21"
     map_public_ip_on_launch = true
     availability_zone       = "ap-south-1a"
-    tags                    = [ Name = "aura-anime-subnet" ]
+    tags                    = { Name = "aura-anime-subnet" }
 }
 
 resource "aws_internet_gateway" "aura_anime_ig" {
@@ -79,7 +79,7 @@ resource "aws_instance" "aura-anime-server" {
     subnet_id              = aws_subnet.aura_anime_subnet.id
     key_name               = aws_key_pair.aura_anime_key.key_name
 
-    root_device_block {
+    root_block_device {
         volume_data = "gp3"
         volume_size = 16
     }
