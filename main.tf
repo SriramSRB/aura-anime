@@ -109,6 +109,6 @@ resource "aws_instance" "aura-anime-server" {
     sudo chmod 644 /etc/rancher/k3s/k3s.yaml
     EOF
 
-    tags = Name { "aura-anime-server" }
+    tags = { Name = "aura-anime-server" }
 
 }
