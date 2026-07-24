@@ -80,7 +80,7 @@ resource "aws_instance" "aura-anime-server" {
     key_name               = aws_key_pair.aura_anime_key.key_name
 
     root_block_device {
-        volume_data = "gp3"
+        volume_type = "gp3"
         volume_size = 16
     }
 
